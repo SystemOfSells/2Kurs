@@ -1,6 +1,3 @@
-import org.opencv.core.Mat;
-
-
 public class Main {
 
     public static Frame frame;
