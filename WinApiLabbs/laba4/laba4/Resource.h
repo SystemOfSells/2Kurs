@@ -9,6 +9,8 @@
 #define ID_LIST3			1490
 #define ID_PROG1			1491
 #define ID_PROG2			1492
+#define ID_STATUS1			1493
+#define ID_STATUS2			1494
 #define IDR_MAINFRAME			128
 #define IDD_LABA4_DIALOG	102
 #define IDD_ABOUTBOX			103

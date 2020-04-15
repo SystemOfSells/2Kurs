@@ -7,6 +7,7 @@
 #define ID_Background_Img1_ICO 1491
 #define ID_Background_Img2_ICO 1492
 #define ID_Background_Img3_ICO 1493
+#define ID_PointCheck 1494
 #define IDS_APP_TITLE			103
 #define IDR_MAINFRAME			128
 #define IDD_LABA2_DIALOG	102

@@ -170,6 +170,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         HBITMAP hBm1 = LoadBitmap(hInst, MAKEINTRESOURCE(ID_Background_Img1_ICO));
         HBITMAP hBm2 = LoadBitmap(hInst, MAKEINTRESOURCE(ID_Background_Img2_ICO));
         HBITMAP hBm3 = LoadBitmap(hInst, MAKEINTRESOURCE(ID_Background_Img3_ICO));
+        HBITMAP point = LoadBitmap(hInst, MAKEINTRESOURCE(ID_PointCheck));
 
         hMenu = CreateMenu();
         hMenuFile = CreatePopupMenu();
@@ -187,6 +188,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         AppendMenu(hMenuBackgroundImg, MF_ENABLED | MF_POPUP | MF_BITMAP | MF_BYCOMMAND, IDM_Background_Img3, (LPWSTR)hBm3);
         CheckMenuRadioItem(hMenuBackgroundImg, IDM_Background_Img1, IDM_Background_Img3, IDM_Background_Img3, MF_BYCOMMAND);
         
+        SetMenuItemBitmaps(hMenuBackgroundImg, 2, MF_BYCOMMAND, NULL, point);
+        SetMenuItemBitmaps(hMenuBackgroundImg, 3, MF_BYCOMMAND, NULL, point);
+        SetMenuItemBitmaps(hMenuBackgroundImg, 4, MF_BYCOMMAND, NULL, point);
 
         AppendMenu(hMenuBackgroundColor, MF_ENABLED | MF_POPUP , IDM_Background_Red, L"&Red");
         AppendMenu(hMenuBackgroundColor, MF_ENABLED | MF_POPUP, IDM_Background_Green, L"&Green");
@@ -237,7 +241,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         HBITMAP hBm1 = LoadBitmap(hInst, MAKEINTRESOURCE(ID_Background_Img1_ICO));
         HBITMAP hBm2 = LoadBitmap(hInst, MAKEINTRESOURCE(ID_Background_Img2_ICO));
         HBITMAP hBm3 = LoadBitmap(hInst, MAKEINTRESOURCE(ID_Background_Img3_ICO));
-        
+        HBITMAP point = LoadBitmap(hInst, MAKEINTRESOURCE(ID_PointCheck));
+
         hPMenu = CreatePopupMenu();
 
         hPMenuFile = CreatePopupMenu();
@@ -257,6 +262,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         AppendMenu(hPMenuBackgroundColor, MF_ENABLED | MF_POPUP, IDM_Background_Red, L"&Red");
         AppendMenu(hPMenuBackgroundColor, MF_ENABLED | MF_POPUP, IDM_Background_Green, L"&Green");
         AppendMenu(hPMenuBackgroundColor, MF_ENABLED | MF_POPUP, IDM_Background_Blue, L"&Blue");
+
+        SetMenuItemBitmaps(hPMenuBackgroundImg, 2, MF_BYCOMMAND, NULL, point);
+        SetMenuItemBitmaps(hPMenuBackgroundImg, 3, MF_BYCOMMAND, NULL, point);
+        SetMenuItemBitmaps(hPMenuBackgroundImg, 4, MF_BYCOMMAND, NULL, point);
 
         CheckMenuRadioItem(hPMenuBackgroundColor, IDM_Background_Red, IDM_Background_Blue, colorCheck, MF_BYCOMMAND);
         CheckMenuRadioItem(hPMenuBackgroundImg, IDM_Background_Img1, IDM_Background_Img3, imgCheck, MF_BYCOMMAND);

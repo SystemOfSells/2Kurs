@@ -11,7 +11,8 @@ HINSTANCE hInst;                                // текущий экземпл
 WCHAR szTitle[MAX_LOADSTRING];                  // Текст строки заголовка
 WCHAR szWindowClass[MAX_LOADSTRING];            // имя класса главного окна
 HWND hListBoxNames, hListBox2Names, hListBoxGroups
-    ,hText1, hProgress1, hProgress2;
+    ,hText1, hProgress1, hProgress2, hStatus1, hStatus2;
+int pParts[2];
 
 // Отправить объявления функций, включенных в этот модуль кода:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -129,6 +130,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
     case WM_CREATE:
     {
+
+        hStatus1 = CreateWindowEx(0, L"msctls_statusbar32", L"Group 1", WS_CHILD | WS_VISIBLE, 0, 0, 100, 50, hWnd, 0, NULL, NULL);
+
+        //hStatus2 = CreateWindowEx(0, L"msctls_statusbar32", L"Group 2", WS_CHILD | WS_VISIBLE, 0, 0, 0, 0, hWnd, 0, NULL, NULL);
+
+
         hText1 = CreateWindow(L"STATIC", L"Group 1", WS_CHILD | WS_VISIBLE, 500, 80, 55, 20, hWnd, (HMENU)(-1), NULL, NULL);
         hProgress1 = CreateWindowEx(0, L"msctls_progress32", (LPTSTR)NULL,
             WS_CHILD | WS_VISIBLE, 450, 100, 150, 30,
@@ -144,7 +151,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             WS_CHILD | WS_VISIBLE | BS_PUSHBOX,
             50, 100, 200, 200,
             hWnd, (HMENU)ID_LIST1, hInst, NULL);
-   
+
         hText1 = CreateWindow(L"STATIC", L" Second Name", WS_CHILD | WS_VISIBLE, 100, 180, 100, 20, hWnd, (HMENU)(-1), NULL, NULL);
         hListBox2Names = CreateWindow(L"combobox", NULL,
             WS_CHILD | WS_VISIBLE | BS_PUSHBOX,
@@ -156,7 +163,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             WS_CHILD | WS_VISIBLE | BS_PUSHBOX,
             50, 300, 200, 200,
             hWnd, (HMENU)ID_LIST3, hInst, NULL);
-        
+
         SendMessage(hListBoxNames, CB_ADDSTRING, 0,
             (LPARAM)(LPSTR)L"Киря");
         SendMessage(hListBoxNames, CB_ADDSTRING, 0,
@@ -180,28 +187,49 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             (LPARAM)(LPSTR)L"Джобс");
 
 
-        SendMessage(hListBoxGroups, CB_ADDSTRING, 0,
+        SendMessage(hListBoxGroups, CB_ADDSTRING, 1,
             (LPARAM)(LPSTR)L"Group 1");
-        SendMessage(hListBoxGroups, CB_ADDSTRING, 0,
+        SendMessage(hListBoxGroups, CB_ADDSTRING, 2,
             (LPARAM)(LPSTR)L"Group 2");
         break;
     }
     case WM_COMMAND:
+    {
+        int wmId = LOWORD(wParam);
+        // Разобрать выбор в меню:
+
+
+        switch (wmId)
         {
-            int wmId = LOWORD(wParam);
-            // Разобрать выбор в меню:
-            switch (wmId)
-            {
-            case IDM_ABOUT:
-                DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-                break;
-            case IDM_EXIT:
-                DestroyWindow(hWnd);
-                break;
-            default:
-                return DefWindowProc(hWnd, message, wParam, lParam);
-            }
+        case IDM_ABOUT:
+            DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+            break;
+        case IDM_EXIT:
+            DestroyWindow(hWnd);
+            break;
+        //case ID_LIST3:
+        //    char buf[10];
+        //    GetDlgItemText(hListBoxGroups, ID_LIST3, (LPWSTR)buf, 9);
+        //    MessageBox(NULL,(LPWSTR)buf, L"ВНИМАНИЕ!!!", MB_ICONASTERISK | MB_OK);
+        case CBN_SELCHANGE:
+        {
+            TCHAR strText[255] = { 0 };
+            int idx_row = SendMessage(hListBoxGroups, CB_GETCURSEL, 0, 0);
+            SendMessage(hListBoxGroups, CB_GETLBTEXT, idx_row, (LPARAM)strText);
+            MessageBox(NULL, strText, L"ВНИМАНИЕ!!!", MB_ICONASTERISK | MB_OK);
+            break;
         }
+        default:
+            return DefWindowProc(hWnd, message, wParam, lParam);
+        }
+    }
+    break;
+    case WM_SIZE:
+        int pParts[4];
+        pParts[0] = 100; //часть 1 
+        pParts[1] = 100 + 100; // часть 2
+       
+        SendMessage(hStatus1, WM_SIZE, 0, 0);
         break;
     case WM_PAINT:
         {
